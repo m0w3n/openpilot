@@ -14,9 +14,10 @@
 #include "common/util.h"
 #include "system/hardware/hw.h"
 #include "selfdrive/ui/qt/prime_state.h"
+#include "selfdrive/ui/qt/util.h"
 
-const int UI_BORDER_SIZE = 30;
-const int UI_HEADER_HEIGHT = 420;
+const int UI_BORDER_SIZE = get_d_sm(30);
+const int UI_HEADER_HEIGHT = get_d_sm(420);
 
 const int UI_FREQ = 20; // Hz
 const int BACKLIGHT_OFFROAD = 50;

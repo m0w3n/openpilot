@@ -50,12 +50,12 @@ void PairingQRWidget::updateQrCode(const QString &text) {
   QRgb white = qRgb(255, 255, 255);
   for (int y = 0; y < sz; y++) {
     for (int x = 0; x < sz; x++) {
-      im.setPixel(x, y, qr.getModule(x, y) ? black : white);
+      im.setPixel(get_d_sm(x), get_d_sm(y), qr.getModule(x, y) ? black : white);
     }
   }
 
   // Integer division to prevent anti-aliasing
-  int final_sz = ((width() / sz) - 1) * sz;
+  int final_sz = get_d_sm(((width() / sz) - 1) * sz);
   img = QPixmap::fromImage(im.scaled(final_sz, final_sz, Qt::KeepAspectRatio), Qt::MonoOnly);
 }
 
@@ -77,34 +77,34 @@ PairingPopup::PairingPopup(QWidget *parent) : DialogBase(parent) {
 
   // text
   QVBoxLayout *vlayout = new QVBoxLayout();
-  vlayout->setContentsMargins(85, 70, 50, 70);
-  vlayout->setSpacing(50);
+  vlayout->setContentsMargins(get_d_sm(85), get_d_sm(70), get_d_sm(50), get_d_sm(70));
+  vlayout->setSpacing(get_d_sm(50));
   hlayout->addLayout(vlayout, 1);
   {
     QPushButton *close = new QPushButton(QIcon(":/icons/close.svg"), "", this);
-    close->setIconSize(QSize(80, 80));
+    close->setIconSize(QSize((80), (80)));
     close->setStyleSheet("border: none;");
     vlayout->addWidget(close, 0, Qt::AlignLeft);
     QObject::connect(close, &QPushButton::clicked, this, &QDialog::reject);
 
-    vlayout->addSpacing(30);
+    vlayout->addSpacing(get_d_sm(30));
 
     QLabel *title = new QLabel(tr("Pair your device to your comma account"), this);
-    title->setStyleSheet("font-size: 75px; color: black;");
+    title->setStyleSheet("font-size: 30px; color: black;");
     title->setWordWrap(true);
     vlayout->addWidget(title);
 
     QLabel *instructions = new QLabel(QString(R"(
-      <ol type='1' style='margin-left: 15px;'>
-        <li style='margin-bottom: 50px;'>%1</li>
-        <li style='margin-bottom: 50px;'>%2</li>
-        <li style='margin-bottom: 50px;'>%3</li>
+      <ol type='1' style='margin-left: 6px;'>
+        <li style='margin-bottom: 20px;'>%1</li>
+        <li style='margin-bottom: 20px;'>%2</li>
+        <li style='margin-bottom: 20px;'>%3</li>
       </ol>
     )").arg(tr("Go to https://connect.comma.ai on your phone"))
     .arg(tr("Click \"add new device\" and scan the QR code on the right"))
     .arg(tr("Bookmark connect.comma.ai to your home screen to use it like an app")), this);
 
-    instructions->setStyleSheet("font-size: 47px; font-weight: bold; color: black;");
+    instructions->setStyleSheet("font-size: 18px; font-weight: bold; color: black;");
     instructions->setWordWrap(true);
     vlayout->addWidget(instructions);
 
@@ -120,53 +120,53 @@ PairingPopup::PairingPopup(QWidget *parent) : DialogBase(parent) {
 PrimeUserWidget::PrimeUserWidget(QWidget *parent) : QFrame(parent) {
   setObjectName("primeWidget");
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
-  mainLayout->setContentsMargins(56, 40, 56, 40);
-  mainLayout->setSpacing(20);
+  mainLayout->setContentsMargins(get_d_sm(56), get_d_sm(40), get_d_sm(56), get_d_sm(40));
+  mainLayout->setSpacing(get_d_sm(20));
 
   QLabel *subscribed = new QLabel(tr("✓ SUBSCRIBED"));
-  subscribed->setStyleSheet("font-size: 41px; font-weight: bold; color: #86FF4E;");
+  subscribed->setStyleSheet("font-size: 16px; font-weight: bold; color: #86FF4E;");
   mainLayout->addWidget(subscribed);
 
   QLabel *commaPrime = new QLabel(tr("comma prime"));
-  commaPrime->setStyleSheet("font-size: 75px; font-weight: bold;");
+  commaPrime->setStyleSheet("font-size: 30px; font-weight: bold;");
   mainLayout->addWidget(commaPrime);
 }
 
 
 PrimeAdWidget::PrimeAdWidget(QWidget* parent) : QFrame(parent) {
   QVBoxLayout *main_layout = new QVBoxLayout(this);
-  main_layout->setContentsMargins(80, 90, 80, 60);
+  main_layout->setContentsMargins(get_d_sm(80), get_d_sm(90), get_d_sm(80), get_d_sm(60));
   main_layout->setSpacing(0);
 
   QLabel *upgrade = new QLabel(tr("Upgrade Now"));
-  upgrade->setStyleSheet("font-size: 75px; font-weight: bold;");
+  upgrade->setStyleSheet("font-size: 30px; font-weight: bold;");
   main_layout->addWidget(upgrade, 0, Qt::AlignTop);
-  main_layout->addSpacing(50);
+  main_layout->addSpacing(get_d_sm(50));
 
   QLabel *description = new QLabel(tr("Become a comma prime member at connect.comma.ai"));
-  description->setStyleSheet("font-size: 56px; font-weight: light; color: white;");
+  description->setStyleSheet("font-size: 21px; font-weight: light; color: white;");
   description->setWordWrap(true);
   main_layout->addWidget(description, 0, Qt::AlignTop);
 
   main_layout->addStretch();
 
   QLabel *features = new QLabel(tr("PRIME FEATURES:"));
-  features->setStyleSheet("font-size: 41px; font-weight: bold; color: #E5E5E5;");
+  features->setStyleSheet("font-size: 16px; font-weight: bold; color: #E5E5E5;");
   main_layout->addWidget(features, 0, Qt::AlignBottom);
-  main_layout->addSpacing(30);
+  main_layout->addSpacing(get_d_sm(30));
 
   QVector<QString> bullets = {tr("Remote access"), tr("24/7 LTE connectivity"), tr("1 year of drive storage"), tr("Remote snapshots")};
   for (auto &b : bullets) {
     const QString check = "<b><font color='#465BEA'>✓</font></b> ";
     QLabel *l = new QLabel(check + b);
     l->setAlignment(Qt::AlignLeft);
-    l->setStyleSheet("font-size: 50px; margin-bottom: 15px;");
+    l->setStyleSheet("font-size: 20px; margin-bottom: 6px;");
     main_layout->addWidget(l, 0, Qt::AlignBottom);
   }
 
   setStyleSheet(R"(
     PrimeAdWidget {
-      border-radius: 10px;
+      border-radius: 4px;
       background-color: #333333;
     }
   )");
@@ -181,16 +181,16 @@ SetupWidget::SetupWidget(QWidget* parent) : QFrame(parent) {
   QFrame* finishRegistration = new QFrame;
   finishRegistration->setObjectName("primeWidget");
   QVBoxLayout* finishRegistrationLayout = new QVBoxLayout(finishRegistration);
-  finishRegistrationLayout->setSpacing(38);
-  finishRegistrationLayout->setContentsMargins(64, 48, 64, 48);
+  finishRegistrationLayout->setSpacing(get_d_sm(38));
+  finishRegistrationLayout->setContentsMargins(get_d_sm(64), get_d_sm(48), get_d_sm(64), get_d_sm(48));
 
   QLabel* registrationTitle = new QLabel(tr("Finish Setup"));
-  registrationTitle->setStyleSheet("font-size: 75px; font-weight: bold;");
+  registrationTitle->setStyleSheet("font-size: 30px; font-weight: bold;");
   finishRegistrationLayout->addWidget(registrationTitle);
 
   QLabel* registrationDescription = new QLabel(tr("Pair your device with comma connect (connect.comma.ai) and claim your comma prime offer."));
   registrationDescription->setWordWrap(true);
-  registrationDescription->setStyleSheet("font-size: 50px; font-weight: light;");
+  registrationDescription->setStyleSheet("font-size: 20px; font-weight: light;");
   finishRegistrationLayout->addWidget(registrationDescription);
 
   finishRegistrationLayout->addStretch();
@@ -198,11 +198,11 @@ SetupWidget::SetupWidget(QWidget* parent) : QFrame(parent) {
   QPushButton* pair = new QPushButton(tr("Pair device"));
   pair->setStyleSheet(R"(
     QPushButton {
-      font-size: 55px;
-      font-weight: 500;
-      border-radius: 10px;
+      font-size: 22px;
+      font-weight: 200;
+      border-radius: 4px;
       background-color: #465BEA;
-      padding: 64px;
+      padding: 25px;
     }
     QPushButton:pressed {
       background-color: #3049F4;
@@ -223,7 +223,7 @@ SetupWidget::SetupWidget(QWidget* parent) : QFrame(parent) {
   QWidget *content = new QWidget;
   QVBoxLayout *content_layout = new QVBoxLayout(content);
   content_layout->setContentsMargins(0, 0, 0, 0);
-  content_layout->setSpacing(30);
+  content_layout->setSpacing(get_d_sm(30));
 
   WiFiPromptWidget *wifi_prompt = new WiFiPromptWidget;
   QObject::connect(wifi_prompt, &WiFiPromptWidget::openSettings, this, &SetupWidget::openSettings);
@@ -236,7 +236,7 @@ SetupWidget::SetupWidget(QWidget* parent) : QFrame(parent) {
 
   setStyleSheet(R"(
     #primeWidget {
-      border-radius: 10px;
+      border-radius: 4px;
       background-color: #333333;
     }
   )");

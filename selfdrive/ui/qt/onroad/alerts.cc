@@ -59,9 +59,9 @@ void OnroadAlerts::paintEvent(QPaintEvent *event) {
     return;
   }
   static std::map<cereal::SelfdriveState::AlertSize, const int> alert_heights = {
-    {cereal::SelfdriveState::AlertSize::SMALL, 271},
-    {cereal::SelfdriveState::AlertSize::MID, 420},
-    {cereal::SelfdriveState::AlertSize::FULL, height()},
+    {cereal::SelfdriveState::AlertSize::SMALL, get_d_sm(271)},
+    {cereal::SelfdriveState::AlertSize::MID, get_d_sm(420)},
+    {cereal::SelfdriveState::AlertSize::FULL, get_d_sm(height())},
   };
   int h = alert_heights[alert.size];
 
@@ -71,7 +71,7 @@ void OnroadAlerts::paintEvent(QPaintEvent *event) {
     margin = 0;
     radius = 0;
   }
-  QRect r = QRect(0 + margin, height() - h + margin, width() - margin*2, h - margin*2);
+  QRect r = QRect(0 + get_d_sm(margin), height() - h + get_d_sm(margin), width() - get_d_sm(margin)*2, h - get_d_sm(margin)*2);
 
   QPainter p(this);
 
@@ -79,7 +79,7 @@ void OnroadAlerts::paintEvent(QPaintEvent *event) {
   p.setPen(Qt::NoPen);
   p.setCompositionMode(QPainter::CompositionMode_SourceOver);
   p.setBrush(QBrush(alert_colors[alert.status]));
-  p.drawRoundedRect(r, radius, radius);
+  p.drawRoundedRect(r, get_d_sm(radius), get_d_sm(radius));
 
   QLinearGradient g(0, r.y(), 0, r.bottom());
   g.setColorAt(0, QColor::fromRgbF(0, 0, 0, 0.05));
@@ -87,7 +87,7 @@ void OnroadAlerts::paintEvent(QPaintEvent *event) {
 
   p.setCompositionMode(QPainter::CompositionMode_DestinationOver);
   p.setBrush(QBrush(g));
-  p.drawRoundedRect(r, radius, radius);
+  p.drawRoundedRect(r, get_d_sm(radius), get_d_sm(radius));
   p.setCompositionMode(QPainter::CompositionMode_SourceOver);
 
   // text
@@ -95,18 +95,18 @@ void OnroadAlerts::paintEvent(QPaintEvent *event) {
   p.setPen(QColor(0xff, 0xff, 0xff));
   p.setRenderHint(QPainter::TextAntialiasing);
   if (alert.size == cereal::SelfdriveState::AlertSize::SMALL) {
-    p.setFont(InterFont(74, QFont::DemiBold));
+    p.setFont(InterFont(get_d_sm(74), QFont::DemiBold));
     p.drawText(r, Qt::AlignCenter, alert.text1);
   } else if (alert.size == cereal::SelfdriveState::AlertSize::MID) {
-    p.setFont(InterFont(88, QFont::Bold));
-    p.drawText(QRect(0, c.y() - 125, width(), 150), Qt::AlignHCenter | Qt::AlignTop, alert.text1);
-    p.setFont(InterFont(66));
-    p.drawText(QRect(0, c.y() + 21, width(), 90), Qt::AlignHCenter, alert.text2);
+    p.setFont(InterFont(get_d_sm(88), QFont::Bold));
+    p.drawText(QRect(0, c.y() - get_d_sm(125), width(), get_d_sm(150)), Qt::AlignHCenter | Qt::AlignTop, alert.text1);
+    p.setFont(InterFont(get_d_sm(66)));
+    p.drawText(QRect(0, c.y() + get_d_sm(21), width(), get_d_sm(90)), Qt::AlignHCenter, alert.text2);
   } else if (alert.size == cereal::SelfdriveState::AlertSize::FULL) {
     bool l = alert.text1.length() > 15;
-    p.setFont(InterFont(l ? 132 : 177, QFont::Bold));
-    p.drawText(QRect(0, r.y() + (l ? 240 : 270), width(), 600), Qt::AlignHCenter | Qt::TextWordWrap, alert.text1);
-    p.setFont(InterFont(88));
-    p.drawText(QRect(0, r.height() - (l ? 361 : 420), width(), 300), Qt::AlignHCenter | Qt::TextWordWrap, alert.text2);
+    p.setFont(InterFont(get_d_sm(l ? 132 : 177), QFont::Bold));
+    p.drawText(QRect(0, r.y() + get_d_sm(l ? 240 : 270), width(), get_d_sm(600)), Qt::AlignHCenter | Qt::TextWordWrap, alert.text1);
+    p.setFont(InterFont(get_d_sm(88)));
+    p.drawText(QRect(0, r.height() - get_d_sm(l ? 361 : 420), width(), get_d_sm(300)), Qt::AlignHCenter | Qt::TextWordWrap, alert.text2);
   }
 }

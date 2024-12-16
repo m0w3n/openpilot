@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QPushButton>
+#include "selfdrive/ui/qt/util.h"
 
 WiFiPromptWidget::WiFiPromptWidget(QWidget *parent) : QFrame(parent) {
   stack = new QStackedLayout(this);
@@ -11,26 +12,26 @@ WiFiPromptWidget::WiFiPromptWidget(QWidget *parent) : QFrame(parent) {
   // Setup Wi-Fi
   QFrame *setup = new QFrame;
   QVBoxLayout *setup_layout = new QVBoxLayout(setup);
-  setup_layout->setContentsMargins(56, 40, 56, 40);
-  setup_layout->setSpacing(20);
+  setup_layout->setContentsMargins(get_d_sm(56), get_d_sm(40), get_d_sm(56), get_d_sm(40));
+  setup_layout->setSpacing(get_d_sm(20));
   {
     QHBoxLayout *title_layout = new QHBoxLayout;
-    title_layout->setSpacing(32);
+    title_layout->setSpacing(get_d_sm(32));
     {
       QLabel *icon = new QLabel;
       QPixmap pixmap("../assets/offroad/icon_wifi_strength_full.svg");
-      icon->setPixmap(pixmap.scaledToWidth(80, Qt::SmoothTransformation));
+      icon->setPixmap(pixmap.scaledToWidth(get_d_sm(80), Qt::SmoothTransformation));
       title_layout->addWidget(icon);
 
       QLabel *title = new QLabel(tr("Setup Wi-Fi"));
-      title->setStyleSheet("font-size: 64px; font-weight: 600;");
+      title->setStyleSheet("font-size: 25px; font-weight: 240;");
       title_layout->addWidget(title);
       title_layout->addStretch();
     }
     setup_layout->addLayout(title_layout);
 
     QLabel *desc = new QLabel(tr("Connect to Wi-Fi to upload driving data and help improve openpilot"));
-    desc->setStyleSheet("font-size: 40px; font-weight: 400;");
+    desc->setStyleSheet("font-size: 16px; font-weight: 160;");
     desc->setWordWrap(true);
     setup_layout->addWidget(desc);
 
@@ -38,11 +39,11 @@ WiFiPromptWidget::WiFiPromptWidget(QWidget *parent) : QFrame(parent) {
     connect(settings_btn, &QPushButton::clicked, [=]() { emit openSettings(1); });
     settings_btn->setStyleSheet(R"(
       QPushButton {
-        font-size: 48px;
-        font-weight: 500;
-        border-radius: 10px;
+        font-size: 19px;
+        font-weight: 200;
+        border-radius: 4px;
         background-color: #465BEA;
-        padding: 32px;
+        padding: 12px;
       }
       QPushButton:pressed {
         background-color: #3049F4;
@@ -55,13 +56,13 @@ WiFiPromptWidget::WiFiPromptWidget(QWidget *parent) : QFrame(parent) {
   // Uploading data
   QWidget *uploading = new QWidget;
   QVBoxLayout *uploading_layout = new QVBoxLayout(uploading);
-  uploading_layout->setContentsMargins(64, 56, 64, 56);
-  uploading_layout->setSpacing(36);
+  uploading_layout->setContentsMargins(get_d_sm(64), get_d_sm(56), get_d_sm(64), get_d_sm(56));
+  uploading_layout->setSpacing(get_d_sm(36));
   {
     QHBoxLayout *title_layout = new QHBoxLayout;
     {
       QLabel *title = new QLabel(tr("Ready to upload"));
-      title->setStyleSheet("font-size: 64px; font-weight: 600;");
+      title->setStyleSheet("font-size: 25px; font-weight: 240;");
       title->setWordWrap(true);
       title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
       title_layout->addWidget(title);
@@ -69,13 +70,13 @@ WiFiPromptWidget::WiFiPromptWidget(QWidget *parent) : QFrame(parent) {
 
       QLabel *icon = new QLabel;
       QPixmap pixmap("../assets/offroad/icon_wifi_uploading.svg");
-      icon->setPixmap(pixmap.scaledToWidth(120, Qt::SmoothTransformation));
+      icon->setPixmap(pixmap.scaledToWidth(get_d_sm(120), Qt::SmoothTransformation));
       title_layout->addWidget(icon);
     }
     uploading_layout->addLayout(title_layout);
 
     QLabel *desc = new QLabel(tr("Training data will be pulled periodically while your device is on Wi-Fi"));
-    desc->setStyleSheet("font-size: 48px; font-weight: 400;");
+    desc->setStyleSheet("font-size: 19px; font-weight: 160;");
     desc->setWordWrap(true);
     uploading_layout->addWidget(desc);
   }
@@ -84,7 +85,7 @@ WiFiPromptWidget::WiFiPromptWidget(QWidget *parent) : QFrame(parent) {
   setStyleSheet(R"(
     WiFiPromptWidget {
       background-color: #333333;
-      border-radius: 10px;
+      border-radius: 4px;
     }
   )");
 

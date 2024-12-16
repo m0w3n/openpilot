@@ -20,6 +20,10 @@
 #include "common/swaglog.h"
 #include "system/hardware/hw.h"
 
+int get_d_sm(int i) {
+  return std::ceil(i/d_sm);
+}
+
 QString getVersion() {
   static QString version =  QString::fromStdString(Params().get("Version"));
   return version;

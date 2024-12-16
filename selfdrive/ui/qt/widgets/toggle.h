@@ -3,6 +3,7 @@
 #include <QAbstractButton>
 #include <QMouseEvent>
 #include <QPropertyAnimation>
+#include "selfdrive/ui/qt/util.h"
 
 class Toggle : public QAbstractButton {
   Q_OBJECT
@@ -12,7 +13,7 @@ public:
   Toggle(QWidget* parent = nullptr);
   void togglePosition();
   bool on;
-  int animation_duration = 150;
+  int animation_duration = get_d_sm(150);
   int immediateOffset = 0;
   int offset_circle() const {
     return _x_circle;

@@ -7,6 +7,7 @@
 #include <QStyle>
 
 #include "selfdrive/ui/ui.h"
+#include "selfdrive/ui/qt/util.h"
 
 ExperimentalModeButton::ExperimentalModeButton(QWidget *parent) : QPushButton(parent) {
   chill_pixmap = QPixmap("../assets/img_couch.svg").scaledToWidth(img_width, Qt::SmoothTransformation);
@@ -15,7 +16,7 @@ ExperimentalModeButton::ExperimentalModeButton(QWidget *parent) : QPushButton(pa
   // go to toggles and expand experimental mode description
   connect(this, &QPushButton::clicked, [=]() { emit openSettings(2, "ExperimentalMode"); });
 
-  setFixedHeight(125);
+  setFixedHeight(get_d_sm(125));
   QHBoxLayout *main_layout = new QHBoxLayout;
   main_layout->setContentsMargins(horizontal_padding, 0, horizontal_padding, 0);
 
@@ -34,8 +35,8 @@ ExperimentalModeButton::ExperimentalModeButton(QWidget *parent) : QPushButton(pa
     }
 
     QLabel {
-      font-size: 45px;
-      font-weight: 300;
+      font-size: 18px;
+      font-weight: 120;
       text-align: left;
       font-family: JetBrainsMono;
       color: #000000;

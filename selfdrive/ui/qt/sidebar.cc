@@ -5,23 +5,23 @@
 #include "selfdrive/ui/qt/util.h"
 
 void Sidebar::drawMetric(QPainter &p, const QPair<QString, QString> &label, QColor c, int y) {
-  const QRect rect = {30, y, 240, 126};
+  const QRect rect = {get_d_sm(30), get_d_sm(y), get_d_sm(240), get_d_sm(126)};
 
   p.setPen(Qt::NoPen);
   p.setBrush(QBrush(c));
-  p.setClipRect(rect.x() + 4, rect.y(), 18, rect.height(), Qt::ClipOperation::ReplaceClip);
-  p.drawRoundedRect(QRect(rect.x() + 4, rect.y() + 4, 100, 118), 18, 18);
+  p.setClipRect((rect.x() + 4), (rect.y()), get_d_sm(18), (rect.height()), Qt::ClipOperation::ReplaceClip);
+  p.drawRoundedRect(QRect((rect.x() + 4), (rect.y() + 4), get_d_sm(100), get_d_sm(118)), get_d_sm(18), get_d_sm(18));
   p.setClipping(false);
 
   QPen pen = QPen(QColor(0xff, 0xff, 0xff, 0x55));
-  pen.setWidth(2);
+  pen.setWidth(get_d_sm(2));
   p.setPen(pen);
   p.setBrush(Qt::NoBrush);
-  p.drawRoundedRect(rect, 20, 20);
+  p.drawRoundedRect(rect, get_d_sm(20), get_d_sm(20));
 
   p.setPen(QColor(0xff, 0xff, 0xff));
-  p.setFont(InterFont(35, QFont::DemiBold));
-  p.drawText(rect.adjusted(22, 0, 0, 0), Qt::AlignCenter, label.first + "\n" + label.second);
+  p.setFont(InterFont(get_d_sm(35), QFont::DemiBold));
+  p.drawText(rect.adjusted(get_d_sm(22), 0, 0, 0), Qt::AlignCenter, label.first + "\n" + label.second);
 }
 
 Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(false), settings_pressed(false) {
@@ -33,7 +33,7 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
 
   setAttribute(Qt::WA_OpaquePaintEvent);
   setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-  setFixedWidth(300);
+  setFixedWidth(get_d_sm(300));
 
   QObject::connect(uiState(), &UIState::uiUpdate, this, &Sidebar::updateState);
 
@@ -127,13 +127,14 @@ void Sidebar::paintEvent(QPaintEvent *event) {
   const QColor gray(0x54, 0x54, 0x54);
   for (int i = 0; i < 5; ++i) {
     p.setBrush(i < net_strength ? Qt::white : gray);
-    p.drawEllipse(x, 196, 27, 27);
+    p.drawEllipse(get_d_sm(x), get_d_sm(196), get_d_sm(27), get_d_sm(27));
     x += 37;
   }
 
-  p.setFont(InterFont(35));
+  // --
+  p.setFont(InterFont(get_d_sm(35)));
   p.setPen(QColor(0xff, 0xff, 0xff));
-  const QRect r = QRect(58, 247, width() - 100, 50);
+  const QRect r = QRect(get_d_sm(58), get_d_sm(247), get_d_sm(width() - 100), get_d_sm(50));
   p.drawText(r, Qt::AlignLeft | Qt::AlignVCenter, net_type);
 
   // metrics

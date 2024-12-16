@@ -256,24 +256,24 @@ MultiOptionDialog::MultiOptionDialog(const QString &prompt_text, const QStringLi
   )");
 
   QVBoxLayout *main_layout = new QVBoxLayout(container);
-  main_layout->setContentsMargins(55, 50, 55, 50);
+  main_layout->setContentsMargins(get_d_sm(55), get_d_sm(50), get_d_sm(55), get_d_sm(50));
 
   QLabel *title = new QLabel(prompt_text, this);
-  title->setStyleSheet("font-size: 70px; font-weight: 500;");
+  title->setStyleSheet("font-size: 28px; font-weight: 200;");
   main_layout->addWidget(title, 0, Qt::AlignLeft | Qt::AlignTop);
-  main_layout->addSpacing(25);
+  main_layout->addSpacing(get_d_sm(25));
 
   QWidget *listWidget = new QWidget(this);
   QVBoxLayout *listLayout = new QVBoxLayout(listWidget);
-  listLayout->setSpacing(20);
+  listLayout->setSpacing(get_d_sm(20));
   listWidget->setStyleSheet(R"(
     QPushButton {
-      height: 135;
-      padding: 0px 50px;
+      height: 54;
+      padding: 0px 20px;
       text-align: left;
-      font-size: 55px;
-      font-weight: 300;
-      border-radius: 10px;
+      font-size: 22px;
+      font-weight: 120;
+      border-radius: 4px;
       background-color: #4F4F4F;
     }
     QPushButton:checked { background-color: #465BEA; }
@@ -309,12 +309,12 @@ MultiOptionDialog::MultiOptionDialog(const QString &prompt_text, const QStringLi
   scroll_view->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
   main_layout->addWidget(scroll_view);
-  main_layout->addSpacing(35);
+  main_layout->addSpacing(get_d_sm(35));
 
   // cancel + confirm buttons
   QHBoxLayout *blayout = new QHBoxLayout;
   main_layout->addLayout(blayout);
-  blayout->setSpacing(50);
+  blayout->setSpacing(get_d_sm(50));
 
   QPushButton *cancel_btn = new QPushButton(tr("Cancel"));
   QObject::connect(cancel_btn, &QPushButton::clicked, this, &ConfirmationDialog::reject);
@@ -323,7 +323,7 @@ MultiOptionDialog::MultiOptionDialog(const QString &prompt_text, const QStringLi
   blayout->addWidget(confirm_btn);
 
   QVBoxLayout *outer_layout = new QVBoxLayout(this);
-  outer_layout->setContentsMargins(50, 50, 50, 50);
+  outer_layout->setContentsMargins(get_d_sm(50), get_d_sm(50), get_d_sm(50), get_d_sm(50));
   outer_layout->addWidget(container);
 }
 

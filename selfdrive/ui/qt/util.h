@@ -13,6 +13,10 @@
 #include "cereal/gen/cpp/car.capnp.h"
 #include "common/params.h"
 
+#include <cmath>
+const double d_sm = 2.5;
+int get_d_sm(int i);
+
 QString getVersion();
 QString getBrand();
 QString getUserAgent();

@@ -15,6 +15,7 @@
 #include "selfdrive/ui/qt/widgets/prime.h"
 #include "selfdrive/ui/qt/widgets/scrollview.h"
 #include "selfdrive/ui/qt/offroad/developer_panel.h"
+#include "selfdrive/ui/qt/util.h"
 
 TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
   // param, title, desc, icon
@@ -189,7 +190,7 @@ void TogglesPanel::updateToggles() {
 }
 
 DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
-  setSpacing(50);
+  setSpacing(get_d_sm(50));
   addItem(new LabelControl(tr("Dongle ID"), getDongleId().value_or(tr("N/A"))));
   addItem(new LabelControl(tr("Serial"), params.get("HardwareSerial").c_str()));
 
@@ -266,7 +267,7 @@ DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
 
   // power buttons
   QHBoxLayout *power_layout = new QHBoxLayout();
-  power_layout->setSpacing(30);
+  power_layout->setSpacing(get_d_sm(30));
 
   QPushButton *reboot_btn = new QPushButton(tr("Reboot"));
   reboot_btn->setObjectName("reboot_btn");
@@ -283,9 +284,9 @@ DevicePanel::DevicePanel(SettingsWindow *parent) : ListWidget(parent) {
   }
 
   setStyleSheet(R"(
-    #reboot_btn { height: 120px; border-radius: 15px; background-color: #393939; }
+    #reboot_btn { height:  48px; border-radius:  6px; background-color: #393939; }
     #reboot_btn:pressed { background-color: #4a4a4a; }
-    #poweroff_btn { height: 120px; border-radius: 15px; background-color: #E22C2C; }
+    #poweroff_btn { height:  48px; border-radius:  6px; background-color: #E22C2C; }
     #poweroff_btn:pressed { background-color: #FF2424; }
   )");
   addItem(power_layout);
@@ -364,18 +365,18 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
   QPushButton *close_btn = new QPushButton(tr("×"));
   close_btn->setStyleSheet(R"(
     QPushButton {
-      font-size: 140px;
-      padding-bottom: 20px;
-      border-radius: 100px;
+      font-size: 56px;
+      padding-bottom: 8px;
+      border-radius: 40px;
       background-color: #292929;
-      font-weight: 400;
+      font-weight: 160;
     }
     QPushButton:pressed {
       background-color: #3B3B3B;
     }
   )");
-  close_btn->setFixedSize(200, 200);
-  sidebar_layout->addSpacing(45);
+  close_btn->setFixedSize(get_d_sm(200), get_d_sm(200));
+  sidebar_layout->addSpacing(get_d_sm(45));
   sidebar_layout->addWidget(close_btn, 0, Qt::AlignCenter);
   QObject::connect(close_btn, &QPushButton::clicked, this, &SettingsWindow::closeSettings);
 
@@ -407,8 +408,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
         color: grey;
         border: none;
         background: none;
-        font-size: 65px;
-        font-weight: 500;
+        font-size: 26px;
+        font-weight: 200;
       }
       QPushButton:checked {
         color: white;
@@ -422,7 +423,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
     sidebar_layout->addWidget(btn, 0, Qt::AlignRight);
 
     const int lr_margin = name != tr("Network") ? 50 : 0;  // Network panel handles its own margins
-    panel->setContentsMargins(lr_margin, 25, lr_margin, 25);
+    panel->setContentsMargins(get_d_sm(lr_margin), get_d_sm(25), get_d_sm(lr_margin), get_d_sm(25));
 
     ScrollView *panel_frame = new ScrollView(panel, this);
     panel_widget->addWidget(panel_frame);
@@ -432,26 +433,26 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
       panel_widget->setCurrentWidget(w);
     });
   }
-  sidebar_layout->setContentsMargins(50, 50, 100, 50);
+  sidebar_layout->setContentsMargins(get_d_sm(50), get_d_sm(50), get_d_sm(100), get_d_sm(50));
 
   // main settings layout, sidebar + main panel
   QHBoxLayout *main_layout = new QHBoxLayout(this);
 
-  sidebar_widget->setFixedWidth(500);
+  sidebar_widget->setFixedWidth(get_d_sm(500));
   main_layout->addWidget(sidebar_widget);
   main_layout->addWidget(panel_widget);
 
   setStyleSheet(R"(
     * {
       color: white;
-      font-size: 50px;
+      font-size: 20px;
     }
     SettingsWindow {
       background-color: black;
     }
     QStackedWidget, ScrollView {
       background-color: #292929;
-      border-radius: 30px;
+      border-radius: 12px;
     }
   )");
 }

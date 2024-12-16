@@ -17,7 +17,7 @@ void DriverViewWindow::paintGL() {
   if (frames.empty()) {
     p.setPen(Qt::white);
     p.setRenderHint(QPainter::TextAntialiasing);
-    p.setFont(InterFont(100, QFont::Bold));
+    p.setFont(InterFont(get_d_sm(100), QFont::Bold));
     p.drawText(geometry(), Qt::AlignCenter, tr("camera starting"));
     return;
   }

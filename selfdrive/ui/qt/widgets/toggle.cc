@@ -3,8 +3,8 @@
 #include <QPainter>
 
 Toggle::Toggle(QWidget *parent) : QAbstractButton(parent),
-_height(80),
-_height_rect(60),
+_height(get_d_sm(80)),
+_height_rect(get_d_sm(60)),
 on(false),
 _anim(new QPropertyAnimation(this, "offset_circle", this))
 {
@@ -29,7 +29,7 @@ void Toggle::paintEvent(QPaintEvent *e) {
 
   // Draw toggle background right
   p.setBrush(QColor(0x393939));
-  p.drawRoundedRect(QRect(_x_circle - _radius, _y_rect, width() - (_x_circle - _radius), _height_rect), _height_rect/2, _height_rect/2);
+  p.drawRoundedRect(QRect(_x_circle - _radius, _y_rect, get_d_sm(width()) - (_x_circle - _radius), _height_rect), _height_rect/2, _height_rect/2);
 
   // Draw toggle circle
   p.setBrush(circleColor);
@@ -41,7 +41,7 @@ void Toggle::mouseReleaseEvent(QMouseEvent *e) {
     return;
   }
   const int left = _radius;
-  const int right = width() - _radius;
+  const int right = get_d_sm(width()) - _radius;
   if ((_x_circle != left && _x_circle != right) || !this->rect().contains(e->localPos().toPoint())) {
     // If mouse release isn't in rect or animation is running, don't parse touch events
     return;
@@ -55,7 +55,7 @@ void Toggle::mouseReleaseEvent(QMouseEvent *e) {
 void Toggle::togglePosition() {
   on = !on;
   const int left = _radius;
-  const int right = width() - _radius;
+  const int right = get_d_sm(width()) - _radius;
   _anim->setStartValue(on ? left + immediateOffset : right - immediateOffset);
   _anim->setEndValue(on ? right : left);
   _anim->setDuration(animation_duration);

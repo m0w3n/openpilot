@@ -4,6 +4,7 @@
 #include <QPushButton>
 
 #include "common/params.h"
+#include "selfdrive/ui/qt/util.h"
 
 class ExperimentalModeButton : public QPushButton {
   Q_OBJECT
@@ -19,8 +20,8 @@ private:
 
   Params params;
   bool experimental_mode;
-  int img_width = 100;
-  int horizontal_padding = 30;
+  int img_width = get_d_sm(100);
+  int horizontal_padding = get_d_sm(30);
   QPixmap experimental_pixmap;
   QPixmap chill_pixmap;
   QLabel *mode_label;

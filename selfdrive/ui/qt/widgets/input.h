@@ -8,7 +8,7 @@
 #include <QWidget>
 
 #include "selfdrive/ui/qt/widgets/keyboard.h"
-
+#include "selfdrive/ui/qt/util.h"
 
 class DialogBase : public QDialog {
   Q_OBJECT
