@@ -16,6 +16,7 @@
 #include <cmath>
 const double d_sm = 2.5;
 int get_d_sm(int i);
+float get_d_sm_zoom(float i);
 
 QString getVersion();
 QString getBrand();

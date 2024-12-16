@@ -23,6 +23,10 @@
 int get_d_sm(int i) {
   return std::ceil(i/d_sm);
 }
+// 摄像头缩放比
+float get_d_sm_zoom(float i) {
+  return i/(1.1 * d_sm);
+}
 
 QString getVersion() {
   static QString version =  QString::fromStdString(Params().get("Version"));
